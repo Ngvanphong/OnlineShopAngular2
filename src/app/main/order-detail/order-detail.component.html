@@ -104,10 +104,7 @@
                 </th>
                 <th>
                   ID sản phẩm
-                </th>
-                <th>
-                  Kích thước
-                </th>
+                </th>              
                 <th>
                   Số lượng
                 </th>
@@ -127,9 +124,7 @@
                 <td>
                   {{item.Product.ID}}
                 </td>
-                <td>
-                  {{item.Size.Name}}
-                </td>
+        
                 <td>
                   {{item.Quantity | number}}
                 </td>
@@ -137,12 +132,12 @@
                 <td>{{item.Price * item.Quantity | number}},000</td>
               </tr>
               <tr>
-                <td colspan="7">
+                <td colspan="6">
                   Tổng tiền: {{totalAmount| number}},000VND
                 </td>
               </tr>
               <tr>
-                <td colspan="7">
+                <td colspan="6">
                   Tổng tiền cần thanh toán: {{entity.TotalPayment | number}},000VND
                 </td>
               </tr>
