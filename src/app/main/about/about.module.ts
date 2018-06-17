@@ -8,6 +8,8 @@ import {FormsModule} from '@angular/forms' ;
 import {ModalModule} from 'ngx-bootstrap';
 import{SimpleTinyModule} from '../../share/simple-tiny/simple-tiny.module'
 import { EditorModule } from '@tinymce/tinymce-angular';
+
+
 const aboutRouter:Routes=[
   {path:'',redirectTo:'index', pathMatch:'full'},
   {path:'index',component:AboutComponent},
@@ -23,7 +25,8 @@ const aboutRouter:Routes=[
   ],
   providers:[
     DataService,
-    NotificationService
+    NotificationService,
+
   ],
   declarations: [AboutComponent]
 })

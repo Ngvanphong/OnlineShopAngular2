@@ -17,6 +17,8 @@ export class AboutComponent implements OnInit {
 
   @ViewChild('addEditModal') addEditModal: ModalDirective;
   public about: any={};
+  public flag:boolean=true;
+  private flagInitTiny: boolean = true;
   constructor(private dataService:DataService, private notificationService:NotificationService) { }
 
   ngOnInit() {
@@ -30,8 +32,13 @@ export class AboutComponent implements OnInit {
       })
   }
 
+  addEdit() {
+    this.flag=true;
+    this.addEditModal.show();
+  }
 
   EditAbout(id:string){
+    this.flag=false;
       tinymce.activeEditor.setContent(this.about.Content)
     this.addEditModal.show();
   }
@@ -42,11 +49,21 @@ export class AboutComponent implements OnInit {
 
   public saveChanges(valid:boolean){
     if(valid){
+      if(this.flag==false){
         this.dataService.put("/api/about/update",JSON.stringify(this.about)).subscribe(res=>{
           this.addEditModal.hide();
           this.notificationService.printSuccesMessage(MessageConstant.UPDATE_OK_MEG)
           this.load();
         },error=>this.dataService.handleError(error))
+      }
+      else{
+        this.dataService.post("/api/about/add",JSON.stringify(this.about)).subscribe(res=>{
+          this.addEditModal.hide();
+          this.notificationService.printSuccesMessage(MessageConstant.CREATE_OK_MEG);
+          this.load();
+        },error=>this.dataService.handleError(error))
+
+      }
     }
 
  }
