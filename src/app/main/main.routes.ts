@@ -10,7 +10,6 @@ export const mainRoutes:Routes=[
     {path:'product-category',loadChildren:'./product-category/product-category.module#ProductCategoryModule'},
     {path:'product',loadChildren:'./product/product.module#ProductModule'},
     {path:'order',loadChildren:'./order/order.module#OrderModule'},
-    {path:'size',loadChildren:'./size/size.module#SizeModule'},
     {path:'tag',loadChildren:'./tag/tag.module#TagModule'},
     {path:'footer',loadChildren:'./footer/footer.module#FooterModule'},
     {path:'post',loadChildren:'./post/post.module#PostModule'},
@@ -18,7 +17,9 @@ export const mainRoutes:Routes=[
     {path:'post-add',loadChildren:'./post-add/post-add.module#PostAddModule'},
     {path:'post-update',loadChildren:'./post-update/post-update.module#PostUpdateModule'},
     {path:'contact',loadChildren:'./contact/contact.module#ContactModule'},
-    {path:'slide',loadChildren:'./slide/slide.module#SlideModule'},
+    {path:'slide',loadChildren:'./slide/slide.module#SlideModule'}, 
     {path:'systemconfig',loadChildren:'./systemconfig/systemconfig.module#SystemconfigModule'},
+    {path:'about',loadChildren:'./about/about.module#AboutModule'},
+
   ]}
 ]

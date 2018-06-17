@@ -40,8 +40,7 @@ export class ProductComponent implements OnInit {
   @ViewChild('quantityManageModal') private quantityManageModal: ModalDirective;
   public quantityEntity: any = {};
   public productQuantities: any[];
-  public sizeId: number = null;
-  public sizes: any[];
+ 
 
   
 
@@ -141,8 +140,6 @@ export class ProductComponent implements OnInit {
       }
     }
     
-
-
   }
  
 
@@ -234,69 +231,6 @@ export class ProductComponent implements OnInit {
 
   }
 
-  /*Quantity management */
-
-
-  private loadSizes() {
-    this._dataService.get('/api/productQuantity/getsizes').subscribe((res) => {
-      this.sizes = res;
-    }, error => this._dataService.handleError(error));
-  }
-  private loadProductQuatity(id: any) {
-    this._dataService.get('/api/productQuantity/getall?productId=' + id + '&sizeId=' + this.sizeId).subscribe((res) => {
-      this.productQuantities = res;
-    }, error => this._dataService.handleError(error));
-  }
-
-  public showQuantityManage(productId: any) {
-    this.quantityEntity = {
-      ProductId: productId,
-    }
-    this.loadSizes();
-    this.loadProductQuatity(productId);
-    this.quantityManageModal.show();
-
-  }
-
-  public saveProductQuantity(valid: boolean) {
-    this._dataService.post('/api/productQuantity/add', JSON.stringify(this.quantityEntity)).subscribe(res => {
-      this.loadProductQuatity(this.quantityEntity.ProductId);
-      this.quantityEntity = {
-        ProductId: this.quantityEntity.ProductId,
-      }
-      this.notificationService.printSuccesMessage(MessageConstant.CREATE_OK_MEG);
-    }, error => this._dataService.handleError(error));
-  }
-
-  public deleteQuantity(productId: any, sizeId: any) {
-    let prama: any = {
-      "productId": productId, "sizeId": sizeId,
-    }
-    this.notificationService.printConfirmationDialog(MessageConstant.CONFIRM_DELETE_MEG, () => {
-      this._dataService.deleteWithMultiParams('/api/productQuantity/delete', prama).subscribe((res) => {
-        this.notificationService.printSuccesMessage(MessageConstant.DELETE_OK_MEG);
-        this.loadProductQuatity(productId);
-      }, error => this._dataService.handleError(error));
-    })
-  }
-
-  /* Create API update quatity for product*/
-  public item: any = {}
-  public updateQuantity(productId: any, sizeId: number, count: any) {
-    let prama: any = {
-      "productId": productId, "sizeId": sizeId,
-    }
-    for (let item of this.productQuantities) {
-      if (item.SizeId == sizeId) {
-        this.item = item;
-        this.item.Quantity = Number.parseInt(count);
-      };
-    }
-    this._dataService.put('/api/productQuantity/update', JSON.stringify(this.item)).subscribe((res) => {
-      this.notificationService.printSuccesMessage(MessageConstant.UPDATE_OK_MEG);
-    })
-
-  }
 
 
 

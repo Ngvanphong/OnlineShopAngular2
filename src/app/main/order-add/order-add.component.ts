@@ -14,8 +14,6 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 export class OrderAddComponent implements OnInit {
   @ViewChild('addEditModal') public addEditModal: ModalDirective;
   public entity: any = { Status: true };
-  public sizeId: number = null;
-  public sizes: any[];
   public products: any[];
   public orderDetails: any[] = [];
   public detailEntity: any = {
@@ -32,7 +30,7 @@ export class OrderAddComponent implements OnInit {
   }
   /*Product quantity management */
   public showAddDetail() {
-    this.loadSizes();
+
     this.loadProducts();
 
     this.addEditModal.show();
@@ -44,11 +42,7 @@ export class OrderAddComponent implements OnInit {
     }, error => this._dataService.handleError(error));
   }
 
-  public loadSizes() {
-    this._dataService.get('/api/productQuantity/getsizes').subscribe((response: any[]) => {
-      this.sizes = response;
-    }, error => this._dataService.handleError(error));
-  }
+
   public goBack() {
     this.utilityService.navigate('/main/order/index');
   }
@@ -74,10 +68,10 @@ export class OrderAddComponent implements OnInit {
     if (valid) {
 
       this.detailEntity.Product = this.products.find(x => x.ID == this.detailEntity.ProductID);
-      this.detailEntity.Size = this.sizes.find(x => x.ID == this.detailEntity.SizeId);
+     
       let flag: boolean = true;
       for (var item of this.orderDetails) {
-        if (item.ProductID == this.detailEntity.ProductID && item.SizeId == this.detailEntity.SizeId) {
+        if (item.ProductID == this.detailEntity.ProductID) {
           flag = false;
         }
       }
@@ -100,8 +94,7 @@ export class OrderAddComponent implements OnInit {
   public deleteDetail(item: any) {
     for (var index = 0; index < this.orderDetails.length; index++) {
       let orderDetail = this.orderDetails[index];
-      if (orderDetail.ProductID == item.ProductID
-        && orderDetail.SizeId == item.SizeId) {
+      if (orderDetail.ProductID == item.ProductID) {
         this.orderDetails.splice(index, 1);
       }
     }

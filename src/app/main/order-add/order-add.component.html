@@ -106,10 +106,7 @@
                     <tr>
                       <th>
                         Sản phẩm
-                      </th> 
-                      <th>
-                          Kích thước
-                        </th>            
+                      </th>                              
                       <th>
                         Số lượng
                       </th>
@@ -122,10 +119,7 @@
                     <tr *ngFor="let item of orderDetails">
                       <td>
                         {{item.Product.Name}}
-                      </td>
-                      <td>
-                          {{item.Size.Name}}
-                        </td>              
+                      </td>                                 
                       <td>
                         {{item.Quantity | number}}
                       </td>
@@ -177,19 +171,7 @@
                 Bạn phải nhập tên ít nhất 3 ký tự
               </small>
             </div>
-          </div>        
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">Cỡ</label>
-            <div class="col-md-9 col-sm-9 col-xs-12">
-              <select class="form-control" required #sizeId="ngModel" name="sizeId" [(ngModel)]="detailEntity.SizeId">
-                <option value="">--Chọn cỡ--</option>
-                <option *ngFor="let x of sizes" [value]="x.ID">{{x.Name}}</option>
-              </select>
-              <small [hidden]="sizeId.valid || (sizeId.pristine && !detailForm.submitted)" class="text-danger">
-                Bạn phải nhập cỡ
-              </small>
-            </div>
-          </div>
+          </div>              
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Số lượng</label>
             <div class="col-md-9 col-sm-9 col-xs-12">
@@ -208,7 +190,6 @@
               </small>
             </div>
           </div>
-
           <div class="ln_solid"></div>
           <div class="form-group">
             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">

@@ -83,12 +83,6 @@
                 (click)="showImageManage(item.ID)">
                 <i class="fa fa-file-image-o" aria-hidden="true"></i>
               </button>
-
-              <button class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Quản lý số lượng" *ngIf="_authenService.hasPermission('PRODUCT','update')"
-                (click)="showQuantityManage(item.ID)">
-                <i class="fa fa-bandcamp" aria-hidden="true"></i>
-              </button>
-
               <button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Cập nhật sản phẩm" *ngIf="_authenService.hasPermission('PRODUCT','update')"
                 (click)="showEdit(item.ID)">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -187,6 +181,13 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Giá KM</label>
                 <div class="col-md-9 col-sm-9 col-xs-12">
                   <input type="number" #promotionPrice="ngModel" [(ngModel)]="entity.PromotionPrice" name="promotionPrice" class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Đơn vị tính</label>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+                  <input type="text" #unit="ngModel" [(ngModel)]="entity.Unit" name="unit" class="form-control"
                   />
                 </div>
               </div>
@@ -334,72 +335,3 @@
 </div>
 
 <!--Quản lý số lượng sản phẩm-->
-<!--Quản lý số lượng-->
-<div bsModal #quantityManageModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">Quản lý số lượng sản phẩm</h4>
-        <button type="button" class="close pull-right" (click)="quantityManageModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal form-label-left input_mask" novalidate #quantityForm="ngForm" (ngSubmit)="saveProductQuantity(quantityForm.valid)"
-          *ngIf="quantityEntity">
-          <div class="form-group row">
-            <div class="col-xs-4">
-              <label>Cỡ</label>
-              <select class="form-control" required #sizeId="ngModel" name="sizeId" [(ngModel)]="quantityEntity.SizeId">
-                <option value="">--Chọn cỡ--</option>
-                <option *ngFor="let x of sizes" [value]="x.ID">{{x.Name}}</option>
-              </select>
-              <small [hidden]="sizeId.valid || (sizeId.pristine && !quantityForm.submitted)" class="text-danger">
-                Bạn phải nhập cỡ
-              </small>
-            </div>
-            <div class="col-xs-3">
-              <label>Số lượng</label>
-              <input class="form-control" type="number" #quantity="ngModel" name="quantity" [(ngModel)]="quantityEntity.Quantity" required>
-              <small [hidden]="quantity.valid || (quantity.pristine && !quantityForm.submitted)" class="text-danger">
-                Bạn phải nhập số lượng
-              </small>
-            </div>
-            <div class="col-xs-4">
-              <button type="submit" [disabled]="!quantityForm.valid" class="btn btn-primary mt-24">Thêm</button>
-            </div>
-          </div>
-        </form>
-        <table class="table" *ngIf="productQuantities && productQuantities.length > 0">
-          <thead>
-            <tr>
-              <th>
-                Kích thước
-              </th>
-              <th>Số lượng</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of productQuantities">
-              <td>
-                {{item.Size.Name}}
-              </td>
-              <input #quatityProductid class=" form-control nolinebox" [(ngModel)]="item.Quantity" name="quatityProductid" type="text">
-              <td>
-                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Xóa số lượng" (click)="deleteQuantity(item.ProductId,item.SizeId)">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
-                <button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Cập nhật số lượng" (click)="updateQuantity(item.ProductId,item.SizeId,item.Quantity)">
-                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="ln_solid"></div>
-      </div>
-    </div>
-  </div>
-</div>
