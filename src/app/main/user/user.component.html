@@ -48,10 +48,10 @@
               <img class="small-image" width="128" [src]="BaseUrlImage + user.Avatar" />
             </td>
             <td *ngIf="_authenService.hasPermission('USER','update') && _authenService.hasPermission('USER','delete')">
-              <button *ngIf="_authenService.hasPermission('USER','update')&&user.UserName!='ngvanphong'" class="btn btn-primary" (click)="EditUserModal(user.Id)">
+              <button *ngIf="_authenService.hasPermission('USER','update')&&user.UserName!='vanphong'" class="btn btn-primary" (click)="EditUserModal(user.Id)">
                 <i class="fa fa-pencil-square-o"></i>
               </button>
-              <button *ngIf="_authenService.hasPermission('USER','delete')&&user.UserName!='ngvanphong'" class="btn btn-danger" (click)="deleteUser(user.Id)">
+              <button *ngIf="_authenService.hasPermission('USER','delete')&&user.UserName!='vanphong'" class="btn btn-danger" (click)="deleteUser(user.Id)">
                 <i class="fa fa-trash"></i>
               </button>
             </td>
