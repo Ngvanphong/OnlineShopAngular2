@@ -57,16 +57,18 @@ export class UserComponent implements OnInit {
     })
   }
 
-  public dateOptions: any = {
+public dateOptions: any = {
     locale: { format: 'DD-MM-YYYY' },
     alwaysShowCalendars: false,
     singleDatePicker:true,
     drops: 'up'
 };
+
 public selectedDate(event:any){
   this.entity.BirthDay = moment(event.end._d).format('DD/MM/YYYY');
 }
-  public load() {
+
+public load() {
     this.dataservice.get('/api/appUser/getlistpaging?page=' + this.pageIndex + '&pageSize=' + this.pageSize + '&filter=' + this.filter)
       .subscribe((res: any) => {
         this.users = res.Items;
@@ -74,6 +76,10 @@ public selectedDate(event:any){
         this.pageSize = res.PageSize;
         this.totalRows = res.TotalRows;
       })
+  }
+  public loadIndex(){
+    this.pageIndex=1;
+    this.load();
   }
   pageChanged(event: any): void {
     this.pageIndex = event.page;

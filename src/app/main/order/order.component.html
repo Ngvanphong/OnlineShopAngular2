@@ -36,7 +36,7 @@
           </select>
         </div>
         <div class="col-md-4 col-sm-3 col-xs-12 form-group">
-          <button class="btn btn-primary" type="button" (click)="search()">Tìm</button>
+          <button class="btn btn-primary" type="button" (click)="searchIndex()">Tìm</button>
           <button class="btn btn-default" type="button" (click)="reset()">Reset</button>
           <button *ngIf="_authenService.hasPermission('ORDER','create')" class="btn btn-success" routerLink="/main/order/add">Thêm mới</button>
         </div>

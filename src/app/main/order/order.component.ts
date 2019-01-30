@@ -50,6 +50,10 @@ export class OrderComponent implements OnInit {
         this.totalRow=response.TotalRows;
       }, error => this._dataService.handleError(error));
   }
+  public searchIndex(){
+    this.pageIndex=1;
+    this.search();
+  }
 
   public reset() {
     this.filterCustomerName = '';

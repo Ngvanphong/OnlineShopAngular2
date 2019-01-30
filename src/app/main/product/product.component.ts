@@ -69,6 +69,12 @@ export class ProductComponent implements OnInit {
         this.totalRow = response.TotalRows;
       }, error => this._dataService.handleError(error));
   }
+  
+  public searchIndex(){
+    this.pageIndex=1;
+    this.search();
+  }
+
   public reset() {
     this.filterKeyword = '';
     this.filterHotPromotion = '';
@@ -89,7 +95,7 @@ export class ProductComponent implements OnInit {
   }
   public showEdit(id: string) {
     this._dataService.get('/api/product/detail/' + id).subscribe((response: any) => {
-      this.entity = response;
+      this.entity = response;     
       if (this.flagInitTiny) {
         tinymce.on('init', () => {
         });
@@ -101,6 +107,8 @@ export class ProductComponent implements OnInit {
       this.addEditModal.show();
     }, error => this._dataService.handleError(error));
   }
+
+ 
 
   private deleteConfirm(id: string) {
     this._dataService.delete('/api/product/delete', 'id', id).subscribe((response: any) => {
