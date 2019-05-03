@@ -10,6 +10,7 @@ import { AuthenService } from '../../core/service/authen.service';
 import { NgForm } from '@angular/forms';
 
 
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -40,6 +41,13 @@ export class ProductComponent implements OnInit {
   @ViewChild('quantityManageModal') private quantityManageModal: ModalDirective;
   public quantityEntity: any = {};
   public productQuantities: any[];
+
+  /*ImageContent Management */
+  @ViewChild('imageManageModalContent') private imageManageModalContent: ModalDirective;
+  @ViewChild('imagePathContent') private imagePathContent;
+  public imageEntityContent: any = {};
+  public productImagesContent: any[];
+  public imageContent: any = {};
  
 
   
@@ -238,6 +246,66 @@ export class ProductComponent implements OnInit {
     },error=>this._dataService.handleError(error));
 
   }
+
+  /* Image for content */
+
+/*ImageContent Management */
+public showImageManageContent(id: any) {
+  this.imageEntityContent = {
+    ProductId: id,
+  };
+  this.loadProductImageContent(id);
+  this.imageManageModalContent.show();
+
+};
+private loadProductImageContent(id: any) {
+  this._dataService.get('/api/productImage/getallImageContent?productId=' + id).subscribe((res) => {
+    this.productImagesContent = res;
+  });
+}
+
+public closePopupImageContent() {
+  this.imageManageModalContent.hide();
+}
+
+public saveProductImageContent(forms: NgForm) {
+  if (forms.valid == true) {
+    var fi = this.imagePathContent.nativeElement;
+    if (fi.files.length > 0) {
+      this.uploadService.postWithFile('/api/upload/saveImage?type=product', null, fi.files).then((imageUrl) => {
+        this.imageEntityContent.Path = imageUrl;
+        this.imageEntityContent.SwitchImage = true;
+      }).then(() => {
+        this._dataService.post('/api/productImage/add', JSON.stringify(this.imageEntityContent)).subscribe((res) => {
+          this.imagePathContent.nativeElement.value = '';
+          this.loadProductImageContent(this.imageEntityContent.ProductId);
+          this.imageEntityContent.Caption = '';
+        })
+      })
+    }
+  }
+}
+
+
+public updateImageContent(imageId: any, switchImage: any) {
+  for (let item of this.productImagesContent) {
+    if (item.ID == imageId) {
+      this.imageContent = item;      
+      this.imageContent.SwitchImage = switchImage
+    }
+  }
+  this._dataService.put('/api/productImage/update', JSON.stringify(this.imageContent)).subscribe((res) => {
+  });
+}
+
+public deleteImageContent(imageId: string) {
+  this.notificationService.printConfirmationDialog(MessageConstant.CONFIRM_DELETE_MEG, () => {
+    this._dataService.delete('/api/productImage/delete', 'id', imageId.toString()).subscribe((res) => {
+      this.loadProductImageContent(this.imageEntityContent.ProductId);
+    });
+  })
+}
+
 
 
 
